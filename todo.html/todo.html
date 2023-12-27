@@ -86,10 +86,18 @@
       const priority = document.getElementsByClassName("choose")[1].value;
 
       const taskHtml = `<div class="name">
+          <div class="title-icon">
+            <i class="fa-solid fa-check"></i>
             <h3>${title}</h3>
+            <i class="fa-regular fa-circle-xmark"></i>
+          </div>
+          <div class="desc-icon">
+            <div></div>
             <p>${description}</p>
-            <button>${priority}</button>
-          </div>`;
+            <div><i class="fa-regular fa-pen-to-square"></i></div>
+          </div>
+          <button>${priority}</button>
+        </div>`;
 
       const todoElement = document.getElementById("taskDiv");
 
