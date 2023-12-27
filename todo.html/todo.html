@@ -85,7 +85,11 @@
       const status = document.getElementsByClassName("choose")[0].value;
       const priority = document.getElementsByClassName("choose")[1].value;
 
-      const taskHtml = `<div class="name">${title}  <br> <br>  ${description} <br>  ${priority}</div>`;
+      const taskHtml = `<div class="name">
+            <h3>${title}</h3>
+            <p>${description}</p>
+            <button>${priority}</button>
+          </div>`;
 
       const todoElement = document.getElementById("taskDiv");
 

@@ -28,10 +28,17 @@ html {
   margin-bottom: 10px;
 }
 
-#taskDiv {
+button {
+  background-color: hsl(351, 100%, 86%);
+  border-radius: 10px;
+  border-color: #c94444;
+  margin-bottom: 10px;
+}
+
+/* #taskDiv {
   display: flex;
   flex-direction: column;
-}
+} */
 
 .modal {
   position: fixed;
