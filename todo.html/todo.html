@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./todo.css" />
+    <script
+      src="https://kit.fontawesome.com/ecddd951b8.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="list">
+        <div id="taskDiv">
+          <h1 class="name">To do</h1>
+        </div>
+
+        <h3 class="name" onclick="showModal();">+ Add card</h3>
+      </div>
+      <div class="list">
+        <h1 class="name">In progress</h1>
+
+        <h3 class="name" onclick="showModal();">+ Add card</h3>
+      </div>
+
+      <div class="list">
+        <h1 class="name">Stuck</h1>
+
+        <h3 class="name" onclick="showModal();">+ Add card</h3>
+      </div>
+      <div class="list">
+        <h1 class="name">Done</h1>
+
+        <h3 class="name" onclick="showModal();">+ Add card</h3>
+      </div>
+    </div>
+
+    <div class="modal" id="createModal">
+      <div class="modal-bg" onclick="hideModal()"></div>
+      <div class="modal-content">
+        <div class="exit">
+          <h1>Add Task</h1>
+          <div onclick="hideModal()">
+            <i class="fa-solid fa-circle-xmark"></i>
+          </div>
+        </div>
+        <div>Title</div>
+        <input id="data" type="text" />
+        <div>Description</div>
+        <input id="data1" class="input1" type="text" />
+        <div>Status</div>
+        <select class="choose">
+          <option value="To do">To do</option>
+          <option value="In progress">In progress</option>
+          <option value="Stuck">Stuck</option>
+          <option value="Done">Done</option>
+        </select>
+        <div>Priority</div>
+        <select class="choose">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <div onclick="save()" class="end">Add Task</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function showModal() {
+      const modal = document.getElementById("createModal");
+
+      modal.style.display = "flex";
+    }
+
+    function hideModal() {
+      const modal = document.getElementById("createModal");
+      modal.style.display = "none";
+    }
+
+    function save() {
+      const title = document.getElementById("data").value;
+      const description = document.getElementById("data1").value;
+      const status = document.getElementsByClassName("choose")[0].value;
+      const priority = document.getElementsByClassName("choose")[1].value;
+
+      const taskHtml = `<div class="name">${title}  <br> <br>  ${description} <br>  ${priority}</div>`;
+
+      const todoElement = document.getElementById("taskDiv");
+
+      todoElement.innerHTML = todoElement.innerHTML + taskHtml;
+
+      hideModal();
+      resetForm();
+
+      // let div = document.createElement("h4");
+      // div.innerText = title;
+      // taskDiv.appendChild(div);
+      // title.value = "";
+
+      // let div1 = document.createElement("div1");
+      // div1.innerText = description;
+      // taskDiv.appendChild(div1);
+      // description.value = "";
+
+      // let div2 = document.createElement("div2");
+      // div2.innerText = priority;
+      // taskDiv.appendChild(div2);
+      // priority.value = "";
+
+      // hideModal();
+
+      // document.getElementById("garalt").innerText = title.value;
+      // document.getElementById("garalt1").innerText = description.value;
+      // document.getElementById("garalt2").innerText = priority.value;
+    }
+    function resetForm() {
+      document.getElementById("data").value = "";
+      document.getElementById("data1").value = "";
+      document.getElementsByClassName("choose")[1].value = "";
+    }
+  </script>
+</html>

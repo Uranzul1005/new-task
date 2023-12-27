@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script
+      src="https://kit.fontawesome.com/ecddd951b8.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <img
+          class="background-img"
+          src="./johannes-plenio-DKix6Un55mw-unsplash.jpg"
+          alt="background"
+        />
+      </div>
+      <div class="task">
+        <div class="to-do-list">
+          <div class="name">To do</div>
+          <div class="to-do-intro">
+            <div class="list">
+              <i class="fa-solid fa-check"></i>
+              <p>Todo</p>
+              <i class="fa-solid fa-delete-left"></i>
+            </div>
+            <div class="list">
+              <div></div>
+              <div>This is a todo card</div>
+              <div><i class="fa-regular fa-square-plus"></i></div>
+            </div>
+            <button>High</button>
+          </div>
+          <div class="name" onclick="addTask();">+ Add card</div>
+        </div>
+        <div class="in-progress">
+          <div class="name">In progress</div>
+          <div class="in-progress-intro">
+            <div class="list">
+              <i class="fa-solid fa-check"></i>
+              <p>Todo</p>
+              <i class="fa-solid fa-delete-left"></i>
+            </div>
+            <div class="list">
+              <div></div>
+              <div>This is a todo card</div>
+              <div><i class="fa-regular fa-square-plus"></i></div>
+            </div>
+            <button>High</button>
+          </div>
+          <div class="name" onclick="addTask();">+ Add card</div>
+        </div>
+        <div class="stuck">
+          <div class="name">Stuck</div>
+          <div class="name" onclick="addTask();">+ Add card</div>
+        </div>
+        <div class="done">
+          <div class="name">Done</div>
+          <div class="name" onclick="addTask();">+ Add card</div>
+        </div>
+      </div>
+    </div>
+    <div id="add-card">
+      <div class="exit">
+        <h1>Add Task</h1>
+        <div onclick="exitTask()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+      </div>
+      <br />
+      <div>Title</div>
+      <input type="text" />
+
+      <div>Description</div>
+      <input class="input1" type="text" />
+
+      <div>Status</div>
+      <input type="text" />
+
+      <div>Priority</div>
+      <input type="text" />
+
+      <div class="end">Add Task</div>
+    </div>
+    <script src="engine.js"></script>
+  </body>
+</html>
