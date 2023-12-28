@@ -12,28 +12,30 @@
   </head>
   <body>
     <div class="container">
-      <div class="list">
-        <div id="taskDiv">
+      <div id="lists" class="list">
+        <div id="todoTask">
           <h1 class="name">To do</h1>
         </div>
-
-        <h3 class="name" onclick="showModal();">+ Add card</h3>
+        <h3 class="name" onclick="showModal('todoTask')">+ Add card</h3>
       </div>
       <div class="list">
-        <h1 class="name">In progress</h1>
-
-        <h3 class="name" onclick="showModal();">+ Add card</h3>
+        <div id="inprogressTask">
+          <h1 class="name">In progress</h1>
+        </div>
+        <h3 class="name" onclick="showModal('inprogressTask')">+ Add card</h3>
       </div>
 
       <div class="list">
-        <h1 class="name">Stuck</h1>
-
-        <h3 class="name" onclick="showModal();">+ Add card</h3>
+        <div id="stuckTask">
+          <h1 class="name">Stuck</h1>
+        </div>
+        <h3 class="name" onclick="showModal('stuckTask')">+ Add card</h3>
       </div>
       <div class="list">
-        <h1 class="name">Done</h1>
-
-        <h3 class="name" onclick="showModal();">+ Add card</h3>
+        <div id="doneTask">
+          <h1 class="name">Done</h1>
+        </div>
+        <h3 class="name" onclick="showModal('doneTask')">+ Add card</h3>
       </div>
     </div>
 
@@ -52,10 +54,10 @@
         <input id="data1" class="input1" type="text" />
         <div>Status</div>
         <select class="choose">
-          <option value="To do">To do</option>
-          <option value="In progress">In progress</option>
-          <option value="Stuck">Stuck</option>
-          <option value="Done">Done</option>
+          <option value="todoTask">To do</option>
+          <option value="inprogressTask">In progress</option>
+          <option value="stuckTask">Stuck</option>
+          <option value="doneTask">Done</option>
         </select>
         <div>Priority</div>
         <select class="choose">
@@ -68,16 +70,8 @@
     </div>
   </body>
   <script>
-    function showModal() {
-      const modal = document.getElementById("createModal");
-
-      modal.style.display = "flex";
-    }
-
-    function hideModal() {
-      const modal = document.getElementById("createModal");
-      modal.style.display = "none";
-    }
+    let currentTarget = "todoTask";
+    let generatedId = 0;
 
     function save() {
       const title = document.getElementById("data").value;
@@ -85,21 +79,27 @@
       const status = document.getElementsByClassName("choose")[0].value;
       const priority = document.getElementsByClassName("choose")[1].value;
 
-      const taskHtml = `<div class="name">
-          <div class="title-icon">
-            <i class="fa-solid fa-check"></i>
-            <h3>${title}</h3>
-            <i class="fa-regular fa-circle-xmark"></i>
-          </div>
-          <div class="desc-icon">
-            <div></div>
-            <p>${description}</p>
-            <div><i class="fa-regular fa-pen-to-square"></i></div>
-          </div>
-          <button>${priority}</button>
-        </div>`;
+      generatedId++;
 
-      const todoElement = document.getElementById("taskDiv");
+      const taskHtml = `<div id="task-${generatedId}" class="taskname">
+             <div class="title-icon">
+               <i class="fa-solid fa-check"></i>
+               <h3>${title}</h3>
+               <div onclick="exitTask('task-${generatedId}')">
+                 <i class="fa-regular fa-circle-xmark"></i>
+               </div>
+             </div>
+             <div class="desc-icon">
+               <div></div>
+               <p>${description}</p>
+               <div><i class="fa-regular fa-pen-to-square"></i></div>
+             </div>
+             <button>${priority}</button>
+           </div>`;
+
+      currentTarget = status;
+
+      const todoElement = document.getElementById(currentTarget);
 
       todoElement.innerHTML = todoElement.innerHTML + taskHtml;
 
@@ -127,6 +127,22 @@
       // document.getElementById("garalt1").innerText = description.value;
       // document.getElementById("garalt2").innerText = priority.value;
     }
+
+    function exitTask(taskId) {
+      const exit = document.getElementById(taskId).remove();
+    }
+
+    function showModal(targetId) {
+      const modal = document.getElementById("createModal");
+      modal.style.display = "flex";
+      currentTarget = targetId;
+    }
+
+    function hideModal() {
+      const modal = document.getElementById("createModal");
+      modal.style.display = "none";
+    }
+
     function resetForm() {
       document.getElementById("data").value = "";
       document.getElementById("data1").value = "";
