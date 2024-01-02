@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="myInpt" />
+    <button id="addBtn">Add task</button>
+
+    <div id="tasks"></div>
+  </body>
+  <script>
+    const input = document.getElementById("myInpt");
+    const addBtn = document.getElementById("addBtn");
+    const TasksDiv = document.getElementById("tasks");
+
+    const tasks = [];
+
+    const createElement = (task) => {
+      const title = task.title;
+      const desc = task.desc;
+      const element = `<div><li>${title}</li><li>${desc}</li></div>`;
+      return element;
+    };
+
+    const render = () => {
+      let tasksHTML = "";
+      for (let i = 0; i < tasks.length; i++) {
+        const value = tasks[i];
+        const elememnt = createElement(value);
+        tasksHTML += elememnt;
+      }
+      TasksDiv.innerHTML = tasksHTML;
+    };
+
+    const getValue = () => {
+      const title = input.value;
+      const desc = input.value;
+
+      const task = {
+        title: title,
+        desc: desc,
+      };
+      tasks.push(task);
+      render();
+      resetForm();
+    };
+
+    render();
+
+    addBtn.onclick = getValue;
+
+    function resetForm() {
+      document.getElementById("myInpt").value = "";
+    }
+  </script>
+</html>

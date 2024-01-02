@@ -79,6 +79,59 @@
       const status = document.getElementsByClassName("choose")[0].value;
       const priority = document.getElementsByClassName("choose")[1].value;
 
+      //shine hicheel
+
+      // const tasks = [];
+
+      // generatedId++;
+
+      // const getValue = () => {
+      //   const task = {
+      //     title: title,
+      //     desc: desc,
+      //     prio: prio,
+      //   };
+
+      //   tasks.push(task);
+      //   render();
+      // };
+
+      // const createElement = (task) => {
+      //   const title = task.title;
+      //   const description = task.desc;
+      //   const priority = task.prio;
+      //   const elements = `<div id="task-${generatedId}" class="taskname">
+      //        <div class="title-icon">
+      //          <i class="fa-solid fa-check"></i>
+      //          <h3>${title}</h3>
+      //          <div onclick="exitTask('task-${generatedId}')">
+      //            <i class="fa-regular fa-circle-xmark"></i>
+      //          </div>
+      //        </div>
+      //        <div class="desc-icon">
+      //          <div></div>
+      //          <p>${description}</p>
+      //          <div><i class="fa-regular fa-pen-to-square"></i></div>
+      //        </div>
+      //        <button>${priority}</button>
+      //      </div>`;
+      //   return elements;
+      // };
+
+      // const render = () => {
+      //   let tasksHTML = "";
+      //   for (let i = 0; i < tasks.length; i++) {
+      //     const value = tasks[i];
+      //     const elememnt = createElement(value);
+      //     tasksHTML += elememnt;
+      //   }
+      //   currentTarget = status;
+      //   const todoElement = document.getElementById(currentTarget);
+      //   todoElement.innerHTML = tasksHTML;
+      // };
+
+      //huuchin hicheel
+
       generatedId++;
 
       const taskHtml = `<div id="task-${generatedId}" class="taskname">

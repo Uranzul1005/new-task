@@ -1,0 +1,106 @@
+html {
+  background-image: url(https://images.unsplash.com/photo-1576919228236-a097c32a5cd4?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover;
+  color: white;
+}
+
+.container {
+  display: flex;
+  width: 1000px;
+  margin: 0 auto;
+  gap: 20px;
+}
+
+.list {
+  flex: 1;
+  background-color: lightcoral;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 100px;
+  cursor: pointer;
+  color: #c94444;
+}
+
+.name {
+  background-color: hsl(351, 100%, 86%);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.taskname {
+  background-color: hsl(351, 100%, 86%);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: hsl(351, 100%, 86%);
+  border-radius: 10px;
+  border-color: #c94444;
+  margin-bottom: 10px;
+  color: #c94444;
+}
+
+.title-icon,
+.desc-icon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-bg {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  background-color: hsla(352, 84%, 57%, 0.5);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.choose,
+input {
+  height: 50px;
+  width: 460px;
+  border: 1px solid #ffffff;
+  background-color: hsl(0, 0%, 100%, 0.5);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.input1 {
+  height: 150px;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.end {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  background-color: lightcoral;
+  border-radius: 10px;
+  text-align: center;
+  align-items: center;
+  top: 100px;
+  cursor: pointer;
+}
+
+.exit {
+  display: flex;
+  justify-content: space-between;
+}
