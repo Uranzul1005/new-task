@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //   const names = ["bunny", "puppy", "bird", "kitchen"];
+      //   names.sort();
+      //   console.log(names);
+
+      //   const numbers = [10, 3, 78, 204];
+      //   numbers.sort(compare);
+      //   function compare(a, b) {
+      //     return a - b;
+      //   }
+
+      //   console.log(numbers);
+
+      const products = [
+        { name: "high", price: 1500 },
+        { name: "mid", price: 700 },
+        { name: "low", price: 5000 },
+      ];
+
+      //   //   PRICE SORT
+      //   products.sort((a, b) => {
+      //     return a.price - b.price;
+      //   });
+
+      //   console.log(products);
+
+      //   // NAME SORT
+
+      const order = {
+        high: 1,
+        mid: 2,
+        low: 3,
+      };
+
+      products.sort((a, b) => {
+        // const aOrderNumber = nameOrder[a.name]; // 1
+        // const bOrderNumber = nameOrder[b.name]; // 2
+        // return aOrderNumber - bOrderNumber;
+        return order[a.name] - order[b.name]; // 2
+      });
+      console.log(products);
+    </script>
+  </body>
+</html>

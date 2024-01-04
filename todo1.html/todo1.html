@@ -15,12 +15,14 @@
       <div id="lists" class="list">
         <div id="todoTask">
           <h1 class="name">To do</h1>
+          <div id="newTask"></div>
         </div>
         <h3 class="name" onclick="showModal('todoTask')">+ Add card</h3>
       </div>
       <div class="list">
         <div id="inprogressTask">
           <h1 class="name">In progress</h1>
+          <div id="newTask1"></div>
         </div>
         <h3 class="name" onclick="showModal('inprogressTask')">+ Add card</h3>
       </div>
@@ -28,12 +30,14 @@
       <div class="list">
         <div id="stuckTask">
           <h1 class="name">Stuck</h1>
+          <div id="newTask2"></div>
         </div>
         <h3 class="name" onclick="showModal('stuckTask')">+ Add card</h3>
       </div>
       <div class="list">
         <div id="doneTask">
           <h1 class="name">Done</h1>
+          <div id="newTask3"></div>
         </div>
         <h3 class="name" onclick="showModal('doneTask')">+ Add card</h3>
       </div>
@@ -54,10 +58,10 @@
         <input id="data1" class="input1" type="text" />
         <div>Status</div>
         <select class="choose">
-          <option value="todoTask">To do</option>
-          <option value="inprogressTask">In progress</option>
-          <option value="stuckTask">Stuck</option>
-          <option value="doneTask">Done</option>
+          <option value="todo">To do</option>
+          <option value="inprogress">In progress</option>
+          <option value="stuck">Stuck</option>
+          <option value="done">Done</option>
         </select>
         <div>Priority</div>
         <select class="choose">
@@ -66,10 +70,149 @@
           <option value="High">High</option>
         </select>
         <div onclick="save()" class="end">Add Task</div>
+        <div onclick="edit()" class="end">Update</div>
       </div>
     </div>
   </body>
   <script>
+    const tasks = [];
+    let editingIndex;
+
+    function render() {
+      const todoTasksElement = document.getElementById("newTask");
+      const inprogressTasksElement = document.getElementById("newTask1");
+      const stuckTasksElement = document.getElementById("newTask2");
+      const doneTasksElement = document.getElementById("newTask3");
+      todoResult = ``;
+      inprogressResult = ``;
+      stuckResult = ``;
+      doneResult = ``;
+
+      tasks.sort((a, b) => {
+        const order = {
+          High: 1,
+          Medium: 2,
+          Low: 3,
+        };
+        return order[a.priority] - order[b.priority];
+      });
+
+      for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+        if (task) {
+          const taskHtml = `<div class="taskname">
+             <div onclick="moveTask(${i})" class="title-icon">
+               <i class="fa-solid fa-check"></i>
+               <h3>${task.title}</h3>
+               <div onclick="exitTask(${i})">
+                 <i class="fa-regular fa-circle-xmark"></i>
+               </div>
+             </div>
+             <div class="desc-icon">
+               <div></div>
+               <p>${task.description}</p>
+               <div onclick="editTask(${i})"
+               ><i class="fa-regular fa-pen-to-square"></i></div>
+             </div>
+             <button>${task.priority}</button>
+           </div>`;
+          switch (task.status) {
+            case "todo":
+              todoResult += taskHtml;
+              break;
+            case "inprogress":
+              inprogressResult += taskHtml;
+              break;
+            case "stuck":
+              stuckResult += taskHtml;
+              break;
+            case "done":
+              doneResult += taskHtml;
+              break;
+          }
+        }
+
+        // if (task.status === "todo") {
+        //   todoResult = todoResult + taskHtml;
+        // }
+
+        // if (task.status === "inprogress") {
+        //   inprogressResult = inprogressResult + taskHtml;
+        // }
+
+        // if (task.status === "stuck") {
+        //   stuckResult = stuckResult + taskHtml;
+        // }
+
+        // if (task.status === "done") {
+        //   doneResult = doneResult + taskHtml;
+        // }
+      }
+      todoTasksElement.innerHTML = todoResult;
+      inprogressTasksElement.innerHTML = inprogressResult;
+      stuckTasksElement.innerHTML = stuckResult;
+      doneTasksElement.innerHTML = doneResult;
+    }
+
+    // let currentTarget = "todo";
+
+    function save() {
+      const title = document.getElementById("data").value;
+      const description = document.getElementById("data1").value;
+      const status = document.getElementsByClassName("choose")[0].value;
+      const priority = document.getElementsByClassName("choose")[1].value;
+
+      // currentTarget = status;
+
+      tasks.push({
+        title: title,
+        description: description,
+        priority: priority,
+        status: status,
+      });
+
+      render();
+
+      hideModal();
+      resetForm();
+    }
+
+    function exitTask(index) {
+      if (confirm("Are you sure you want to delete?")) {
+        delete tasks[index];
+        render();
+      }
+    }
+
+    function editTask(index) {
+      showModal();
+      document.getElementById("data").value = tasks[index].title;
+      document.getElementById("data1").value = tasks[index].description;
+      document.getElementsByClassName("choose")[1].value =
+        tasks[index].priority;
+      editingIndex = index;
+    }
+
+    function edit() {
+      const title = document.getElementById("data").value;
+      const description = document.getElementById("data1").value;
+      const status = document.getElementsByClassName("choose")[0].value;
+      const priority = document.getElementsByClassName("choose")[1].value;
+
+      // currentTarget = status;
+
+      tasks[editingIndex] = {
+        title: title,
+        description: description,
+        priority: priority,
+        status: status,
+      };
+
+      render();
+      hideModal();
+      resetForm();
+    }
+
     function showModal(targetId) {
       const modal = document.getElementById("createModal");
       modal.style.display = "flex";
