@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./prompt.css" />
+    <script
+      src="https://kit.fontawesome.com/ecddd951b8.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="lists" class="list">
+        <div id="todoTask">
+          <h1 class="name">To do</h1>
+          <div id="newTask"></div>
+        </div>
+        <h3 class="name" onclick="showPrompt('todoTask')">+ Add card</h3>
+      </div>
+      <div class="list">
+        <div id="inprogressTask">
+          <h1 class="name">In progress</h1>
+          <div id="newTask1"></div>
+        </div>
+        <!-- <h3 class="name" onclick="showPrompt('inprogressTask')">+ Add card</h3> -->
+      </div>
+
+      <div class="list">
+        <div id="stuckTask">
+          <h1 class="name">Stuck</h1>
+          <div id="newTask2"></div>
+        </div>
+        <!-- <h3 class="name" onclick="showPrompt('stuckTask')">+ Add card</h3> -->
+      </div>
+      <div class="list">
+        <div id="doneTask">
+          <h1 class="name">Done</h1>
+          <div id="newTask3"></div>
+        </div>
+        <!-- <h3 class="name" onclick="showPrompt('doneTask')">+ Add card</h3> -->
+      </div>
+    </div>
+
+    <div class="modal" id="createModal">
+      <div class="modal-bg" onclick="hideModal()"></div>
+      <div class="modal-content">
+        <div class="exit">
+          <h1>Add Task</h1>
+          <div onclick="hideModal()">
+            <i class="fa-solid fa-circle-xmark"></i>
+          </div>
+        </div>
+        <div>Title</div>
+        <input id="data" type="text" />
+        <div>Description</div>
+        <textarea
+          id="data1"
+          class="input1"
+          type="text"
+          placeholder="Comment text."
+        ></textarea>
+        <div>Status</div>
+        <select class="choose">
+          <option value="todo">To do</option>
+          <option value="inprogress">In progress</option>
+          <option value="stuck">Stuck</option>
+          <option value="done">Done</option>
+        </select>
+        <div>Priority</div>
+        <select class="choose">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <div onclick="save()" class="end">Save</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const tasks = [];
+    let editingIndex;
+
+    function render() {
+      const todoTasksElement = document.getElementById("newTask");
+      const inprogressTasksElement = document.getElementById("newTask1");
+      const stuckTasksElement = document.getElementById("newTask2");
+      const doneTasksElement = document.getElementById("newTask3");
+      todoResult = ``;
+      inprogressResult = ``;
+      stuckResult = ``;
+      doneResult = ``;
+
+      tasks.sort((a, b) => {
+        const order = {
+          High: 1,
+          Medium: 2,
+          Low: 3,
+        };
+        return order[a.priority] - order[b.priority];
+      });
+
+      for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+
+        if (task) {
+          const taskHtml = `<div class="taskname">
+             <div onclick="moveTask(${i})" class="title-icon">
+               <i class="fa-solid fa-check"></i>
+               <h3>${task.title}</h3>
+               <div onclick="exitTask(${i})">
+                 <i class="fa-regular fa-circle-xmark"></i>
+               </div>
+             </div>
+             <div class="desc-icon">
+               <div></div>
+               <p>${task.description}</p>
+               <div onclick="editTask(${i})"
+               ><i class="fa-regular fa-pen-to-square"></i></div>
+             </div>
+             <button>${task.priority}</button>
+           </div>`;
+          switch (task.status) {
+            case "todo":
+              todoResult += taskHtml;
+              break;
+            case "inprogress":
+              inprogressResult += taskHtml;
+              break;
+            case "stuck":
+              stuckResult += taskHtml;
+              break;
+            case "done":
+              doneResult += taskHtml;
+              break;
+          }
+        }
+      }
+      todoTasksElement.innerHTML = todoResult;
+      inprogressTasksElement.innerHTML = inprogressResult;
+      stuckTasksElement.innerHTML = stuckResult;
+      doneTasksElement.innerHTML = doneResult;
+    }
+
+    function showPrompt() {
+      const title = prompt("Title");
+      if (title != null && title != "") {
+        tasks.push({
+          title: title,
+          description: "",
+          priority: "Low",
+          status: "todo",
+        });
+
+        render();
+      }
+    }
+
+    function exitTask(index) {
+      if (confirm("Are you sure you want to delete?")) {
+        delete tasks[index];
+        render();
+      }
+    }
+
+    function moveTask(index) {
+      const todoTasksElement = document.getElementById("newTask");
+      const inprogressTasksElement = document.getElementById("newTask1");
+      const stuckTasksElement = document.getElementById("newTask2");
+      const doneTasksElement = document.getElementById("newTask3");
+      todoResult = ``;
+      inprogressResult = ``;
+      stuckResult = ``;
+      doneResult = ``;
+
+      tasks.sort((a, b) => {
+        const order = {
+          High: 1,
+          Medium: 2,
+          Low: 3,
+        };
+        return order[a.priority] - order[b.priority];
+      });
+
+      for (let i = 0; i < tasks.length; i++) {
+        const task = tasks[i];
+        if (task) {
+          const taskHtml = `<div class="taskname">
+             <div onclick="moveTask(${i})" class="title-icon">
+               <i class="fa-solid fa-check"></i>
+               <h3>${task.title}</h3>
+               <div onclick="exitTask(${i})">
+                 <i class="fa-regular fa-circle-xmark"></i>
+               </div>
+             </div>
+             <div class="desc-icon">
+               <div></div>
+               <p>${task.description}</p>
+               <div onclick="editTask(${i})"
+               ><i class="fa-regular fa-pen-to-square"></i></div>
+             </div>
+             <button>${task.priority}</button>
+           </div>`;
+          switch (task.status) {
+            case "todo":
+              todoResult += taskHtml;
+              break;
+            case "inprogress":
+              inprogressResult += taskHtml;
+              break;
+            case "stuck":
+              stuckResult += taskHtml;
+              break;
+            case "done":
+              doneResult += taskHtml;
+              break;
+          }
+        }
+      }
+      todoTasksElement.innerHTML = "";
+      inprogressTasksElement.innerHTML = todoResult;
+      stuckTasksElement.innerHTML = inprogressResult;
+      doneTasksElement.innerHTML = stuckResult;
+    }
+
+    function editTask(index) {
+      const modal = document.getElementById("createModal");
+      modal.style.display = "flex";
+
+      document.getElementById("data").value = tasks[index].title;
+      document.getElementById("data1").value = tasks[index].description;
+      document.getElementsByClassName("choose")[1].value =
+        tasks[index].priority;
+      document.getElementsByClassName("choose")[0].value = tasks[index].status;
+
+      editingIndex = index;
+    }
+
+    function save(index) {
+      const title = document.getElementById("data").value;
+      const description = document.getElementById("data1").value;
+      const status = document.getElementsByClassName("choose")[0].value;
+      const priority = document.getElementsByClassName("choose")[1].value;
+
+      tasks[editingIndex] = {
+        title: title,
+        description: description,
+        priority: priority,
+        status: status,
+      };
+
+      render();
+      hideModal();
+      resetForm();
+    }
+
+    function hideModal() {
+      const modal = document.getElementById("createModal");
+      modal.style.display = "none";
+    }
+
+    function resetForm() {
+      document.getElementById("data").value = "";
+      document.getElementById("data1").value = "";
+      document.getElementsByClassName("choose")[1].value = "";
+    }
+  </script>
+</html>
