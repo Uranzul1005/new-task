@@ -92,13 +92,17 @@
       stuckResult = ``;
       doneResult = ``;
 
+      // tasks.sort((a, b) => {
+      //   const order = {
+      //     High: 1,
+      //     Medium: 2,
+      //     Low: 3,
+      //   };
+      //   return order[a.priority] - order[b.priority];
+      // });
+
       tasks.sort((a, b) => {
-        const order = {
-          High: 1,
-          Medium: 2,
-          Low: 3,
-        };
-        return order[a.priority] - order[b.priority];
+        return a.position - b.position;
       });
 
       for (let i = 0; i < tasks.length; i++) {
@@ -106,6 +110,7 @@
 
         if (task) {
           const taskHtml = `<div class="taskname">
+            <button class="priority">${task.priority}</button>
              <div onclick="moveTask(${i})" class="title-icon">
                <i class="fa-solid fa-check"></i>
                <h3>${task.title}</h3>
@@ -119,7 +124,23 @@
                <div onclick="editTask(${i})"
                ><i class="fa-regular fa-pen-to-square"></i></div>
              </div>
-             <button>${task.priority}</button>
+
+             <button class="move" onclick="changePosition(${i})">Up</button>
+             <button class="move" onclick="changePosition(${i})">Down</button>
+             <select onchange="statusChange(${i},this.value);" class="statusChange">
+          <option ${
+            task.status === "todo" ? "selected" : ""
+          } value="todo">To do</option>
+          <option ${
+            task.status === "inprogress" ? "selected" : ""
+          } value="inprogress">In progress</option>
+          <option ${
+            task.status === "stuck" ? "selected" : ""
+          } value="stuck">Stuck</option>
+          <option ${
+            task.status === "done" ? "selected" : ""
+          } value="done">Done</option>
+        </select>
            </div>`;
           switch (task.status) {
             case "todo":
@@ -151,6 +172,7 @@
           description: "",
           priority: "Low",
           status: "todo",
+          position: tasks.length,
         });
 
         render();
@@ -162,66 +184,6 @@
         delete tasks[index];
         render();
       }
-    }
-
-    function moveTask(index) {
-      const todoTasksElement = document.getElementById("newTask");
-      const inprogressTasksElement = document.getElementById("newTask1");
-      const stuckTasksElement = document.getElementById("newTask2");
-      const doneTasksElement = document.getElementById("newTask3");
-      todoResult = ``;
-      inprogressResult = ``;
-      stuckResult = ``;
-      doneResult = ``;
-
-      tasks.sort((a, b) => {
-        const order = {
-          High: 1,
-          Medium: 2,
-          Low: 3,
-        };
-        return order[a.priority] - order[b.priority];
-      });
-
-      for (let i = 0; i < tasks.length; i++) {
-        const task = tasks[i];
-        if (task) {
-          const taskHtml = `<div class="taskname">
-             <div onclick="moveTask(${i})" class="title-icon">
-               <i class="fa-solid fa-check"></i>
-               <h3>${task.title}</h3>
-               <div onclick="exitTask(${i})">
-                 <i class="fa-regular fa-circle-xmark"></i>
-               </div>
-             </div>
-             <div class="desc-icon">
-               <div></div>
-               <p>${task.description}</p>
-               <div onclick="editTask(${i})"
-               ><i class="fa-regular fa-pen-to-square"></i></div>
-             </div>
-             <button>${task.priority}</button>
-           </div>`;
-          switch (task.status) {
-            case "todo":
-              todoResult += taskHtml;
-              break;
-            case "inprogress":
-              inprogressResult += taskHtml;
-              break;
-            case "stuck":
-              stuckResult += taskHtml;
-              break;
-            case "done":
-              doneResult += taskHtml;
-              break;
-          }
-        }
-      }
-      todoTasksElement.innerHTML = "";
-      inprogressTasksElement.innerHTML = todoResult;
-      stuckTasksElement.innerHTML = inprogressResult;
-      doneTasksElement.innerHTML = stuckResult;
     }
 
     function editTask(index) {
@@ -255,6 +217,22 @@
       resetForm();
     }
 
+    function statusChange(index, value) {
+      tasks[index].status = value;
+      render();
+    }
+
+    function changePosition(index, value) {
+      tasks[index].position = a;
+      tasks[index - 1].position = b;
+
+      let temp = a;
+      a = b;
+      b = temp;
+
+      render();
+    }
+
     function hideModal() {
       const modal = document.getElementById("createModal");
       modal.style.display = "none";
@@ -265,5 +243,65 @@
       document.getElementById("data1").value = "";
       document.getElementsByClassName("choose")[1].value = "";
     }
+
+    // function moveTask(index) {
+    //   const todoTasksElement = document.getElementById("newTask");
+    //   const inprogressTasksElement = document.getElementById("newTask1");
+    //   const stuckTasksElement = document.getElementById("newTask2");
+    //   const doneTasksElement = document.getElementById("newTask3");
+    //   todoResult = ``;
+    //   inprogressResult = ``;
+    //   stuckResult = ``;
+    //   doneResult = ``;
+
+    //   tasks.sort((a, b) => {
+    //     const order = {
+    //       High: 1,
+    //       Medium: 2,
+    //       Low: 3,
+    //     };
+    //     return order[a.priority] - order[b.priority];
+    //   });
+
+    //   for (let i = 0; i < tasks.length; i++) {
+    //     const task = tasks[i];
+    //     if (task) {
+    //       const taskHtml = `<div class="taskname">
+    //          <div onclick="moveTask(${i})" class="title-icon">
+    //            <i class="fa-solid fa-check"></i>
+    //            <h3>${task.title}</h3>
+    //            <div onclick="exitTask(${i})">
+    //              <i class="fa-regular fa-circle-xmark"></i>
+    //            </div>
+    //          </div>
+    //          <div class="desc-icon">
+    //            <div></div>
+    //            <p>${task.description}</p>
+    //            <div onclick="editTask(${i})"
+    //            ><i class="fa-regular fa-pen-to-square"></i></div>
+    //          </div>
+    //          <button>${task.priority}</button>
+    //        </div>`;
+    //       switch (task.status) {
+    //         case "todo":
+    //           todoResult += taskHtml;
+    //           break;
+    //         case "inprogress":
+    //           inprogressResult += taskHtml;
+    //           break;
+    //         case "stuck":
+    //           stuckResult += taskHtml;
+    //           break;
+    //         case "done":
+    //           doneResult += taskHtml;
+    //           break;
+    //       }
+    //     }
+    //   }
+    //   todoTasksElement.innerHTML = "";
+    //   inprogressTasksElement.innerHTML = todoResult;
+    //   stuckTasksElement.innerHTML = inprogressResult;
+    //   doneTasksElement.innerHTML = stuckResult;
+    // }
   </script>
 </html>
