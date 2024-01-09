@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: khaki;
+      }
+
+      .todo {
+        background-color: wheat;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 5px;
+        border-radius: 10px;
+      }
+
+      .taskname {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        background-color: burlywood;
+        padding: 20px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        border: 1px solid white;
+      }
+    </style>
+    <script
+      src="https://kit.fontawesome.com/ecddd951b8.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="todo">
+      <h2>Todo list</h2>
+      <div class="tasks" id="todoTask">
+        <div id="newElement"></div>
+      </div>
+      <button onclick="addTask()">Add task</button>
+    </div>
+
+    <script>
+      const tasks = [
+        {
+          name: "Shalaa ugaah",
+        },
+        {
+          name: "Hooloo hiih",
+        },
+        {
+          name: "Huvtssaa ugaah",
+        },
+      ];
+
+      function render() {
+        let taskHTML = ``;
+
+        let index = 0;
+
+        while (index < tasks.length) {
+          taskHTML =
+            taskHTML +
+            `<div class="taskname">
+            <div onclick="editTask(${index})"<i class="fa-regular fa-pen-to-square"></i></div>
+            <div class="task">${tasks[index].name}</div>
+            <div onclick="deleteTask(${index})"<i class="fa-solid fa-delete-left"></i></div>
+            </div>`;
+          index = index + 1;
+        }
+
+        document.getElementById("newElement").innerHTML = taskHTML;
+      }
+
+      function addTask() {
+        const name = prompt("Todo name");
+        if (name !== null && name !== "") {
+          tasks.push({ name: name });
+        }
+        render();
+      }
+
+      function deleteTask(deleteIndex) {
+        if (confirm("Are you sure you want to delete?")) {
+          tasks.splice(deleteIndex, 1);
+          render();
+        }
+      }
+
+      function editTask(editIndex) {
+        const editingTask = prompt("Todo name", tasks[editIndex].name);
+        if (editingTask !== null && editingTask !== "") {
+          tasks[editIndex].name = editingTask;
+        }
+        render();
+      }
+
+      render();
+    </script>
+  </body>
+</html>
